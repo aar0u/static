@@ -10,7 +10,7 @@
 
     body {
         margin: 0;
-        background-color: dimgray;
+        background-color: black;
     }
 
     .trigger {
@@ -29,7 +29,7 @@
         color: rgba(255, 255, 255, 0.7);
     }
 
-    #chicago {
+    .chicago {
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -65,13 +65,15 @@
 
 <body class="vsc-initialized">
     <!-- Manual trigger to refresh the page-->
-    <div class="trigger"><a href="https://s.codepen.io/brianhaferkamp/debug/jGXoZK"><i class="zmdi zmdi-refresh-alt"></i></a></div>
+    <div class="trigger"><a href=""><i class="zmdi zmdi-refresh-alt"></i></a></div>
     <!-- Chicago-->
-    <div id="chicago">
+    <div id="chicago" class="chicago">
         <div class="title">
-<!--             <h1>Chicago</h1>
-            <h2>City of the Big Shoulders</h2> -->
+            <h1>Unsplash</h1>
+            <h2>THE COOLEST COLLECTION EVER</h2>
         </div>
+    </div>
+    <div id="chicago2" class="chicago">
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
@@ -80,17 +82,32 @@
 
     // Automatically reload the browser
     setInterval(function() {
-        window.location.reload();
+        // window.location.reload();
+
+        if ($('#chicago2').css("height") === "0px") {
+            change('#chicago', '#chicago2');
+        } else {
+            change('#chicago2', '#chicago');
+        }
     }, refreshRate);
 
-    // Hide the images on load
-    $('#chicago').hide();
-
-    // Get a random image from Unsplash and fade it in on load
     $('#chicago').css({
-        // serves a random image from this collection on Unsplash.com
-        'background-image': 'url(https://source.unsplash.com/collection/1228/1600x900)'
-    }).fadeIn(1500);
+        'background-image': `url(https://source.unsplash.com/collection/1228/1600x900)`
+    });
+
+    $('#chicago2').css({
+        'background-image': `url(https://source.unsplash.com/collection/1228/1600x900?random=${new Date().getTime()})`
+    }).css('height', '0');
+
+    function change(id1, id2) {
+        // Hide the images on load
+        $(id1).css('height', '0').css({
+            // serves a random image from this collection on Unsplash.com
+            'background-image': `url(https://source.unsplash.com/collection/1228/1600x900?random=${new Date().getTime()})`
+        }).fadeOut('slow');
+
+        $(id2).css('height', '100vh').fadeIn('slow');
+    }
     </script>
 </body>
 
